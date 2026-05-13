@@ -3,7 +3,7 @@ import { db, storage } from '../firebase';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, getDocs, writeBatch } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import Papa from 'papaparse';
-import { Trash2, Edit, Plus, Download, RefreshCcw } from 'lucide-react';
+import { Trash2, Edit, Download, RefreshCcw } from 'lucide-react';
 
 const AdminPage = () => {
   const [destinations, setDestinations] = useState([]);
@@ -86,6 +86,7 @@ const AdminPage = () => {
         batch.delete(doc.ref);
       });
       await batch.commit();
+      localStorage.removeItem('voted_destination'); // Optional: would only clear for current admin device
       alert('All votes have been reset.');
     }
   };
@@ -197,7 +198,24 @@ const AdminPage = () => {
       </div>
 
       <div className="card" style={{ marginTop: '2rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <h2 className="card-title">Vote Summary</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', marginBottom: '1.5rem', marginTop: '1rem' }}>
+          <div style={{ background: 'var(--bg)', padding: '1rem', borderRadius: '10px', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--muted)', textTransform: 'uppercase', fontWeight: 600 }}>Total Votes</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{votes.length}</div>
+          </div>
+          {destinations.map(d => {
+            const count = votes.filter(v => v.destinationId === d.id).length;
+            return (
+              <div key={d.id} style={{ background: 'var(--bg)', padding: '1rem', borderRadius: '10px', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.8rem', color: 'var(--muted)', textTransform: 'uppercase', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.name}</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{count}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
           <h2 className="card-title">Voter List</h2>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button className="btn btn-secondary" style={{ marginTop: 0, width: 'auto' }} onClick={exportCSV}><Download size={16} /> Export CSV</button>

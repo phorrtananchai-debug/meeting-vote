@@ -15,6 +15,15 @@ const PublicPage = () => {
   const [modalImg, setModalImg] = useState(null);
 
   useEffect(() => {
+    // Check if this device has already voted
+    const savedVote = localStorage.getItem('voted_destination');
+    if (savedVote) {
+      const voteData = JSON.parse(savedVote);
+      setHasVoted(true);
+      setVotedPlaceName(voteData.name);
+      setCurrentUser(voteData.voterName || 'User');
+    }
+
     const unsubDest = onSnapshot(collection(db, 'destinations'), (snapshot) => {
       const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setDestinations(data);
@@ -69,6 +78,13 @@ const PublicPage = () => {
     setHasVoted(true);
     setJustVoted(true);
     setVotedPlaceName(selectedPlace.name);
+
+    // Save to localStorage to prevent multiple votes from same device
+    localStorage.setItem('voted_destination', JSON.stringify({
+      id: selectedId,
+      name: selectedPlace.name,
+      voterName: currentUser
+    }));
   };
 
   const voteCounts = votes.reduce((acc, vote) => {
