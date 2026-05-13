@@ -46,7 +46,7 @@
   .voter-badge { display:inline-flex; align-items:center; gap:0.4rem; background:#EEEEFF; color:var(--accent); border-radius:20px; padding:0.3rem 0.9rem; font-size:0.875rem; font-weight:500; margin:1.25rem 0 0.75rem; }
   .section-label { font-family:'Prompt',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin:1.5rem 0 0.75rem; }
 
-  .places-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .places-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
   .place-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:border-color 0.15s, transform 0.1s; user-select:none; }
   .place-card:hover { border-color: #B8B0FF; }
   .place-card.selected { border-color: var(--accent); }
@@ -143,55 +143,81 @@
 // ============================================================
 const PLACES = [
   {
-    id: 'khaoyai',
-    name: 'เขาใหญ่',
-    desc: 'ธรรมชาติ อากาศเย็น',
-    thumb: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=70',
+    id: 'kanchanaburi',
+    name: 'กาญจนบุรี',
+    desc: 'แพ แม่น้ำ ธรรมชาติ',
+    thumb: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=400&q=70',
     imgs: [
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80',
+      'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&q=80',
       'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80',
+      'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80',
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-      'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
     ]
   },
   {
-    id: 'pattaya',
-    name: 'พัทยา',
-    desc: 'ทะเล บีช วิวสวย',
-    thumb: 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=400&q=70',
+    id: 'koh-larn',
+    name: 'เกาะล้าน',
+    desc: 'เกาะใกล้ ทะเลใส นั่งเรือแป๊บเดียว',
+    thumb: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=70',
     imgs: [
-      'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=800&q=80',
       'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
       'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
       'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?w=800&q=80',
       'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&q=80',
+      'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=800&q=80',
     ]
   },
   {
-    id: 'rooftop',
-    name: 'รูฟท็อปกรุงเทพ',
-    desc: 'บาร์ วิวเมือง ปาร์ตี้',
-    thumb: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=70',
+    id: 'koh-chang',
+    name: 'เกาะช้าง',
+    desc: 'เกาะใหญ่ ป่า น้ำตก ทะเล',
+    thumb: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=400&q=70',
     imgs: [
-      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80',
-      'https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=800&q=80',
-      'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=800&q=80',
-      'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80',
-      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
-    ]
-  },
-  {
-    id: 'chiangmai',
-    name: 'เชียงใหม่',
-    desc: 'วัด ไนท์มาร์เก็ต วัฒนธรรม',
-    thumb: 'https://images.unsplash.com/photo-1490077476659-095159692ab5?w=400&q=70',
-    imgs: [
-      'https://images.unsplash.com/photo-1490077476659-095159692ab5?w=800&q=80',
-      'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80',
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
       'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&q=80',
-      'https://images.unsplash.com/photo-1503917988258-f87a78e3c995?w=800&q=80',
+      'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
+      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&q=80',
+      'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
+      'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?w=800&q=80',
+    ]
+  },
+  {
+    id: 'koh-samui',
+    name: 'เกาะสมุย',
+    desc: 'รีสอร์ท สปา ทะเลสวย',
+    thumb: 'https://images.unsplash.com/photo-1589394815349-ec38f1b74a23?w=400&q=70',
+    imgs: [
+      'https://images.unsplash.com/photo-1589394815349-ec38f1b74a23?w=800&q=80',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+      'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=800&q=80',
+      'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
+    ]
+  },
+  {
+    id: 'khao-sok',
+    name: 'เขาสก',
+    desc: 'ทะเลสาบ แพ ป่าดึกดำบรรพ์',
+    thumb: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70',
+    imgs: [
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+      'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
+      'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80',
+      'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
+    ]
+  },
+  {
+    id: 'koh-lipe',
+    name: 'เกาะหลีเป๊ะ',
+    desc: 'น้ำใส ปะการัง ดำน้ำ',
+    thumb: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=70',
+    imgs: [
+      'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+      'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=800&q=80',
+      'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?w=800&q=80',
+      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&q=80',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
     ]
   }
 ];
