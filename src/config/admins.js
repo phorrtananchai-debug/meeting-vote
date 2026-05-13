@@ -1,7 +1,7 @@
 // Add emails of users who are allowed to access the admin dashboard
 export const ALLOWED_ADMINS = [
-  'admin@example.com',
-  // Add more admin emails here
+  'phorr.tananchai@beblanktobehindstudio.com',
+  'phorr.tananchai@gmail.com',
 ];
 
 export const isAdmin = (email) => {
