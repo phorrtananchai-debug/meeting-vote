@@ -91,6 +91,22 @@ const AdminPage = () => {
     }
   };
 
+  const handleDeleteVote = async (id) => {
+    if (window.confirm('ต้องการลบโหวตนี้ใช่ไหม?')) {
+      const deletedVote = votes.find(vote => vote.id === id);
+      setVotes(currentVotes => currentVotes.filter(vote => vote.id !== id));
+      try {
+        await deleteDoc(doc(db, 'votes', id));
+      } catch (error) {
+        console.error('Error deleting vote:', error);
+        if (deletedVote) {
+          setVotes(currentVotes => currentVotes.some(vote => vote.id === id) ? currentVotes : [...currentVotes, deletedVote]);
+        }
+        alert('Failed to delete vote.');
+      }
+    }
+  };
+
   const exportCSV = () => {
     const csvData = votes.map(v => ({
       VoterName: v.voterName,
@@ -228,6 +244,7 @@ const AdminPage = () => {
               <tr>
                 <th>Voter Name</th>
                 <th>Selected Destination</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -235,6 +252,9 @@ const AdminPage = () => {
                 <tr key={v.id}>
                   <td>{v.voterName}</td>
                   <td>{v.destinationName}</td>
+                  <td className="admin-actions">
+                    <button className="btn btn-danger" style={{ padding: '0.5rem', marginTop: 0 }} onClick={() => handleDeleteVote(v.id)}><Trash2 size={16} /> Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
