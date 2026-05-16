@@ -93,6 +93,9 @@ const PublicPage = () => {
   }, {});
 
   const totalVotes = votes.length;
+  const voterNames = votes
+    .map(vote => vote.voterName)
+    .filter(Boolean);
 
   const selectedPlace = destinations.find(d => d.id === selectedId);
 
@@ -205,6 +208,23 @@ const PublicPage = () => {
               </div>
             );
           })}
+        </div>
+
+        <div className="section-label" style={{ marginTop: '1.75rem' }}>คนที่โหวตแล้ว</div>
+        <div className="voter-summary-card">
+          <div className="voter-summary-top">
+            <div className="voter-summary-title">คนที่โหวตแล้ว</div>
+            <div className="voter-summary-total">ทั้งหมด {totalVotes} คน</div>
+          </div>
+          {voterNames.length > 0 ? (
+            <div className="voter-name-list">
+              {voterNames.map((name, index) => (
+                <span key={`${name}-${index}`} className="voter-name-chip">{name}</span>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-voters">ยังไม่มีคนโหวต</div>
+          )}
         </div>
       </div>
 
